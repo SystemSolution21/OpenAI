@@ -1,0 +1,14 @@
+# Virtual Environment
+.env
+
+# Environment Variables
+.env
+
+# Python cache files
+__pycache__/
+
+# Poetry lock file
+poetry.lock
+
+# Database
+instance/

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatbotWebApp</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">OpenAI-Chatbot</div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="message bot-message">
+          <div class="avatar bot-avatar">🤖</div>
+          <div class="message-content">
+            Hello! i'm a AI assistant. How can I help you today?
+          </div>
+        </div>
+        <div class="timestamp">14:00</div>
+      </div>
+      <div class="input-container">
+        <input type="text" id="message-input" placeholder="Type your message..." />
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+  </body>
+  <script src="/static/script.js"></script>
+
+</html>
