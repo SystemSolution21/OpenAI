@@ -7,7 +7,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from openai.types.chat.chat_completion import ChatCompletion
 
-# Constants
+# Default Model
 DEFAULT_MODEL = "gpt-4.1-nano-2025-04-14"
 
 # Initialize App

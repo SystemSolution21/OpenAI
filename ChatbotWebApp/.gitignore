@@ -1,5 +1,5 @@
 # Virtual Environment
-.env
+.venv/
 
 # Environment Variables
 .env
@@ -12,3 +12,6 @@ poetry.lock
 
 # Database
 instance/
+
+# VSCode
+.vscode/
