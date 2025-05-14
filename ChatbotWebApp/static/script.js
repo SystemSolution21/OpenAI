@@ -18,38 +18,17 @@ toggleApiKeyButton.addEventListener("click", function () {
   }
 });
 
-// Store API key and model
-let apiKey = localStorage.getItem("openai_api_key") || "";
-let selectedModel =
-  localStorage.getItem("selected_model") || "gpt-4.1-nano-2025-04-14";
-
-// Initialize settings from localStorage
+// Initialize settings
 document.addEventListener("DOMContentLoaded", function () {
-  // Set initial timestamp
+  // Set timestamp
   const initialTimestamp = document.getElementById("initial-timestamp");
   initialTimestamp.textContent = new Date().toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
-
-  // Load saved settings
-  if (apiKey) {
-    apiKeyInput.value = apiKey;
-  }
-  if (selectedModel) {
-    modelSelect.value = selectedModel;
-  }
-});
-
-// Save settings
-saveSettingsButton.addEventListener("click", function () {
-  apiKey = apiKeyInput.value.trim();
-  selectedModel = modelSelect.value;
-
-  localStorage.setItem("openai_api_key", apiKey);
-  localStorage.setItem("selected_model", selectedModel);
-
-  addMessage("Settings saved successfully!", false);
+  // Set API key and model
+  let apiKey = "";
+  let selectedModel = "gpt-3.5-turbo";
 });
 
 // Add message to chat
@@ -108,11 +87,11 @@ async function sendMessage() {
   const message = messageInput.value.trim();
   if (!message) return;
 
+  apiKey = apiKeyInput.value.trim();
+  selectedModel = modelSelect.value;
+
   if (!apiKey) {
-    addMessage(
-      "Please enter your OpenAI API key in the settings below.",
-      false
-    );
+    addMessage("Please enter your OpenAI API key.", false);
     return;
   }
 
@@ -123,7 +102,7 @@ async function sendMessage() {
   // Add thinking indicator
   const thinking = addThinkingIndicator();
 
-  // Send message to server
+  // Message to server
   try {
     const response = await fetch("http://localhost:5000/api/chat", {
       method: "POST",
