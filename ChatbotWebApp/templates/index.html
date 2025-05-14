@@ -18,11 +18,25 @@
             Hello! i'm a AI assistant. How can I help you today?
           </div>
         </div>
-        <div class="timestamp">14:00</div>
+        <div class="timestamp" id="initial-timestamp"></div>
       </div>
       <div class="input-container">
         <input type="text" id="message-input" placeholder="Type your message..." />
         <button id="send-button">Send</button>
+      </div>
+      <div class="settings-container">
+        <div class="settings-row">
+          <div class="api-key-container">
+            <input type="password" id="api-key-input" placeholder="Enter OpenAI API Key" />
+            <button type="button" id="toggle-api-key" class="toggle-password">👁️</button>
+          </div>
+          <select id="model-select">
+            <option value="gpt-4.1-nano-2025-04-14">GPT-4.1 Nano</option>
+            <option value="gpt-4o-mini-2024-07-18">GPT-4o</option>
+            <option value="gpt-4o-mini-search-preview-2025-03-11">GPT-4o Search Preview</option>
+          </select>
+        </div>
+        <button id="save-settings">Save Settings</button>
       </div>
     </div>
   </body>
