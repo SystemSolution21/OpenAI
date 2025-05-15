@@ -24,7 +24,7 @@ Thumbs.db
 instance/
 
 # VSCode
-.vscode
+.vscode/
 
 # Node Modules
 node_modules/
