@@ -15,9 +15,6 @@ DEFAULT_MODEL = "gpt-3.5-turbo"
 app = Flask(import_name=__name__, static_folder="static", template_folder="templates")
 CORS(app=app)
 
-# Initialize Chat
-client = OpenAI()
-
 
 @app.after_request
 def add_security_headers(response: Response) -> Response:
@@ -68,6 +65,7 @@ def chat() -> Response | tuple[Response, int]:
         )
 
     try:
+
         # Initialize client with user-provided API key
         request_client = OpenAI(api_key=api_key)
         completion: ChatCompletion = request_client.chat.completions.create(
@@ -84,13 +82,15 @@ def chat() -> Response | tuple[Response, int]:
                 "timestamp": time.strftime("%H:%M"),
             }
         )
+
     except openai.AuthenticationError as e:
-        # Specifically handles 401 errors from OpenAI
+
+        # OpenAI error status code 401
         app.logger.error(
-            f"OpenAI Authentication Error: {e.message} (Status: {e.status_code}, Body: {e.body})"
+            msg=f"OpenAI Authentication Error: {e.message} (Status: {e.status_code}, Body: {e.body})"
         )
         user_error_message = "Error: Invalid OpenAI API key or insufficient quota."
-        # e.status_code is guaranteed and should be 401
+
         return (
             jsonify(
                 {"response": user_error_message, "timestamp": time.strftime("%H:%M")}
@@ -99,11 +99,12 @@ def chat() -> Response | tuple[Response, int]:
         )
 
     except openai.APIStatusError as e:
-        # Handles other OpenAI API errors that come with a status code
+
+        # OpenAI API errors other status code
         app.logger.error(
-            f"OpenAI API Status Error: {e.message} (Status: {e.status_code}, Type: {e.type}, Body: {e.body})"
+            msg=f"OpenAI API Status Error: {e.message} (Status: {e.status_code}, Type: {e.type}, Body: {e.body})"
         )
-        # e.message and e.status_code are guaranteed here
+
         user_error_message = f"OpenAI API Error: {e.message}"
         return (
             jsonify(
@@ -113,14 +114,14 @@ def chat() -> Response | tuple[Response, int]:
         )
 
     except openai.APIError as e:
-        # Handles other OpenAI API errors (e.g., connection issues, or errors without a status code but likely with a message)
+
+        # OpenAI API errors messages
         app.logger.error(
-            f"OpenAI API Error: {e.message} (Type: {e.type if hasattr(e, 'type') else 'N/A'})"
+            msg=f"OpenAI API Error: {e.message} (Type: {e.type if hasattr(e, 'type') else 'N/A'})"
         )
-        # e.message is guaranteed here
-        user_error_message = f"OpenAI API Error: {e.message}"
-        # Default to 500 if this specific APIError doesn't have a status_code (less common)
-        http_status_code = getattr(e, "status_code", 500)
+        user_error_message: str = f"OpenAI API Error: {e.message}"
+        # Default status code 500
+        http_status_code: Any | int = getattr(e, "status_code", 500)
         return (
             jsonify(
                 {"response": user_error_message, "timestamp": time.strftime("%H:%M")}
@@ -128,18 +129,18 @@ def chat() -> Response | tuple[Response, int]:
             http_status_code,
         )
 
-    except Exception as e:  # General fallback for any other unexpected errors
+    except Exception as e:
+
+        # General exceptions errors
         app.logger.error(msg=f"Unexpected error during OpenAI API call: {str(e)}")
         user_error_message = (
             "An error occurred while communicating with the AI service."
         )
-        # For truly generic exceptions, we don't assume .message or .status_code
-        # str(e) is the safest way to get a string representation.
         return (
             jsonify(
                 {"response": user_error_message, "timestamp": time.strftime("%H:%M")}
             ),
-            500,  # Default to 500 for unexpected errors
+            500,  # Default status code
         )
 
 

@@ -6,12 +6,25 @@
 
 # Python cache files
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+*.env
 
-# Poetry lock file
-poetry.lock
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
 
 # Database
 instance/
 
 # VSCode
 .vscode/
+
+# Node Modules
+node_modules/

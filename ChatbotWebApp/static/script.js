@@ -5,7 +5,6 @@ const sendButton = document.getElementById("send-button");
 const apiKeyInput = document.getElementById("api-key-input");
 const toggleApiKeyButton = document.getElementById("toggle-api-key");
 const modelSelect = document.getElementById("model-select");
-const saveSettingsButton = document.getElementById("save-settings");
 
 // Toggle API key visibility
 toggleApiKeyButton.addEventListener("click", function () {
